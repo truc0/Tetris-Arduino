@@ -6,7 +6,7 @@
 #include <FastLED.h>
 
 // custom
-#include "US.h"
+#include "lib/US.h"
 
 #define LED_PIN 6
 #define NUM_LEDS 144
