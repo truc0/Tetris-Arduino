@@ -7,6 +7,7 @@
 
 // custom
 #include "lib/US.h"
+#include "lib/Buttons.h"
 
 #define LED_PIN 6
 #define NUM_LEDS 144
@@ -30,14 +31,19 @@ void setup() {
 	if (enableUS) {
 		bool started = US::init();
 	}
+
+	// init Buttons
+	Buttons::init();
 }
 
 void loop() {
-	distance = US::detect();
+	// distance = US::detect();
 	
-	if (distance < 10 && isPaused) {
-		resume();
-	} else if (distance > 10 && !isPaused) {
-		pause();
-	}
+	// if (distance < 10 && isPaused) {
+		// resume();
+	// } else if (distance > 10 && !isPaused) {
+		// pause();
+	// }
+
+	Buttons::detect();
 }
