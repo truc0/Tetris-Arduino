@@ -10,7 +10,7 @@
 #include "lib/Buttons.h"
 #include "lib/pt/pt.h"
 
-#define LED_PIN 6
+#define LED_PIN 10
 #define NUM_LEDS 144
 #define USTrig 2
 #define USEcho 3
