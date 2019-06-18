@@ -68,4 +68,30 @@ void setup() {
 void loop() {
 	// mission_US(&M_US);
 	mission_Btn(&M_Btn);
+
+
+  if (delays < millis())
+   {
+     delays = millis() + delay_;
+     movedown();
+   }
+
+   //buttun actions
+  int button = Buttons::detect();
+  
+  if (button == 1) //up=rotate
+    rotate();
+  if (button == 2) //right=moveright
+    moveright();    
+  if (button == 3) //left=moveleft
+    moveleft();
+  if (button == 4) //down=movedown
+    movedown();  
+  
+  
+  Serial.print(analogRead(A4));
+  Serial.print(analogRead(A5));
+  Serial.print(analogRead(A6));  
+  Serial.println(analogRead(A7));
+   
 }

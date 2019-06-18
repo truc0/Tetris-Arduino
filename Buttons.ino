@@ -35,40 +35,20 @@ bool Buttons::detect_single(int port)
 void Buttons::detect()
 {
 	if (detect_single(pin_up) && state[pin_up]==HIGH) {
-		up();
+		return 1;
 	}
 
 	if (detect_single(pin_down) && state[pin_down]==HIGH) {
-		down();
+		return 4;
 	}
 
 	if (detect_single(pin_left) && state[pin_left]==HIGH) {
-		left();
+		return 3;
 	}
 
 	if (detect_single(pin_right) && state[pin_right]==HIGH) {
-		right();
+		return 2();
 	}
 
 	delay(50);
-}
-
-void Buttons::up()
-{
-	Serial.println("up");
-}
-
-void Buttons::down()
-{
-	Serial.println("down");
-}
-
-void Buttons::left()
-{
-	Serial.println("left");
-}
-
-void Buttons::right()
-{
-	Serial.println("right");
 }
