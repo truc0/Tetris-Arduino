@@ -1,23 +1,41 @@
-#include <Arduino.h>
 #include <string.h>
-#include ".\Tetris.ino"
-#include ".\convert.ino"
+#include <FastLED.h>
+// props
 
-long delays = 0;
-short delay_ = 500;
-long bdelay = 0;
-short buttondelay = 150;
-short btdowndelay = 30;
-short btsidedelay = 80;
-unsigned char blocktype;
-unsigned char blockrotation;
+/**
+CRGB r;
 
-int lines = 0;
-boolean  block[8][18]; //2 extra for rotation
-boolean  pile[8][16];
-boolean disp[8][16];
+void rand_color()
+{
+  srand(time(nullptr));
+  int a = rand() % 5;
+  switch (a) {
+    case 0:
+      r = CRGB::Blue;
+      break;
 
-boolean lib[10][5][7];
+    case 1:
+      r = CRGB::Red;
+      break;
+
+    case 2:
+      r = CRGB::Yellow;
+      break;
+
+    case 3:
+      r = CRGB::Green;
+      break;
+
+    case 4:
+      r = CRGB(160, 32, 240); // purple
+      break;
+
+    default:
+      r = CRGB::White;
+      break;
+  }
+}
+*/
 
 void updateLED()
 {
@@ -27,12 +45,17 @@ void updateLED()
   {
     for (j=0;j<16;j++)
     {
-      leds[convert(i,y)] = block[i][j] | pile[i][j];
+      if (block[i][j] || pile[i][j]) {
+        leds[convert(j+2,i)] = CRGB::Blue;
+      } else {
+        leds[convert(j+2,i)] = CRGB::Black;
+      }
     }
   }
+  FastLED.show();
 }
 
-boolean moveleft()
+bool moveleft()
 {  
   if (space_left())
   {
@@ -58,8 +81,8 @@ boolean moveleft()
   return 0;
 }
 
-boolean moveright()
-{
+bool moveright()
+{ Serial.println("right");
   if (space_right())
   {
     int i;
@@ -517,7 +540,7 @@ void movedown()
   updateLED();  
 }
 
-boolean check_overlap()
+bool check_overlap()
 {
   int i;
   int j;  
@@ -622,12 +645,16 @@ void gameover()
      }
      delay(60);
   }
+
+  for (int i=0; i<NUM_LEDS; ++i) {
+    leds[i] = CRGB::Red;
+  }
  
   //calculate score board
-       
+  /**   
     int num_lines;
     num_lines = 2;
-    boolean score[8][17];
+    bool score[8][17];
 
         for (i=0;i<8;i++)
         {
@@ -686,7 +713,7 @@ void gameover()
             }
         }   
         
-        boolean tmpline[8];
+        bool tmpline[8];
         for (i=0;i<8;i++)
         {
             score[i][16]=score[i][0];
@@ -703,7 +730,7 @@ void gameover()
         
         delay(100);
     }
-  
+  */
 }
 
 void newBlock()
@@ -789,7 +816,7 @@ void newBlock()
   blockrotation = 0;
 }
 
-boolean space_below()
+bool space_below()
 { 
   int i;
   int j;  
@@ -811,7 +838,7 @@ boolean space_below()
   return true;
 }
 
-boolean space_left2()
+bool space_left2()
 { 
   int i;
   int j;  
@@ -833,7 +860,7 @@ boolean space_left2()
   return true;
 }
 
-boolean space_left3()
+bool space_left3()
 { 
   int i;
   int j;  
@@ -855,7 +882,7 @@ boolean space_left3()
   return true;
 }
 
-boolean space_left()
+bool space_left()
 { 
   int i;
   int j;  
@@ -877,7 +904,7 @@ boolean space_left()
   return true;
 }
 
-boolean space_right()
+bool space_right()
 { 
   int i;
   int j;  
@@ -899,7 +926,7 @@ boolean space_right()
   return true;
 }
 
-boolean space_right3()
+bool space_right3()
 { 
   int i;
   int j;  
@@ -921,7 +948,7 @@ boolean space_right3()
   return true;
 }
 
-boolean space_right2()
+bool space_right2()
 { 
   int i;
   int j;  

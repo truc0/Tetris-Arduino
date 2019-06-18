@@ -32,7 +32,7 @@ bool Buttons::detect_single(int port)
 	return !isSame;
 }
 
-void Buttons::detect()
+int Buttons::detect()
 {
 	if (detect_single(pin_up) && state[pin_up]==HIGH) {
 		return 1;
@@ -47,8 +47,8 @@ void Buttons::detect()
 	}
 
 	if (detect_single(pin_right) && state[pin_right]==HIGH) {
-		return 2();
+		return 2;
 	}
 
-	delay(50);
+	delay(100);
 }

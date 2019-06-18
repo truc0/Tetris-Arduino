@@ -3,6 +3,6 @@ namespace Buttons
 
 	// functions
 	void init();
-	void detect();
+	int detect();
 	bool detect_single(int port);
 }
