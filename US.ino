@@ -1,42 +1,42 @@
 /**
- * Pause and Resume functions uses ultrasonic
- * sensor
- * 
- * 
- */
+   Pause and Resume functions uses ultrasonic
+   sensor
+
+
+*/
 
 
 #include "lib/US.h"
 
 bool US::init()
 {
-	// init ultrasonic sensor
+  // init ultrasonic sensor
 
-	if (!enableUS) return false;
+  if (!enableUS) return false;
 
-	Serial.begin(9600);
-	pinMode(USTrig, OUTPUT);
-	pinMode(USEcho, INPUT);
-	Serial.println("[INFO] ultrasonic sensor started.");
+  Serial.begin(9600);
+  pinMode(USTrig, OUTPUT);
+  pinMode(USEcho, INPUT);
+  Serial.println("[INFO] ultrasonic sensor started.");
 
-	return true;
+  return true;
 }
 
-double US::detect(int delaySeconds=500)
+double US::detect(int delaySeconds)
 {
-	// detect the distance
+  // detect the distance
 
-	double distance = 0.0;
+  double distance = 0.0;
 
-	// make pulse
-	digitalWrite(USTrig, LOW);
-	delayMicroseconds(2);
-	digitalWrite(USTrig, HIGH);
-	delayMicroseconds(10);
-	digitalWrite(USTrig, LOW);
+  // make pulse
+  digitalWrite(USTrig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(USTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(USTrig, LOW);
 
-	distance = pulseIn(USEcho, HIGH) / 58.00;
-	delay(delaySeconds);
+  distance = pulseIn(USEcho, HIGH) / 58.00;
+  delay(delaySeconds);
 
-	return distance;
+  return distance;
 }

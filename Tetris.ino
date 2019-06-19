@@ -24,9 +24,21 @@ CRGB leds[NUM_LEDS];
 
 double distance = 0.0;
 bool isPaused = false;
-
+int buttonController = 0;
 
 static struct pt M_US, M_Btn;
+
+
+long delays = 0;
+short delay_ = 500;
+long bdelay = 0;
+short buttondelay = 150;
+short btdowndelay = 30;
+short btsidedelay = 80;
+unsigned char blocktype;
+unsigned char blockrotation;
+void movedown();
+
 
 // define missons
 static int mission_US(struct pt *pt)
@@ -45,7 +57,7 @@ static int mission_US(struct pt *pt)
 static int mission_Btn(struct pt *pt)
 {
 	PT_BEGIN(pt);
-	Buttons::detect();
+	buttonController = Buttons::detect();
 	PT_END(pt);
 }
 
@@ -75,18 +87,16 @@ void loop() {
      delays = millis() + delay_;
      movedown();
    }
-
-   //buttun actions
-  int button = Buttons::detect();
   
-  if (button == 1) //up=rotate
+  if (buttonController == 1) //up=rotate
     rotate();
-  if (button == 2) //right=moveright
+  if (buttonController == 2) //right=moveright
     moveright();    
-  if (button == 3) //left=moveleft
+  if (buttonController == 3) //left=moveleft
     moveleft();
-  if (button == 4) //down=movedown
+  if (buttonController == 4) //down=movedown
     movedown();  
+  buttonController = 0;
   
   
   Serial.print(analogRead(A4));
