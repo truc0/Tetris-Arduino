@@ -18,7 +18,7 @@
 using namespace std;
 
 // LED_TYPE = WS2812;
-const bool enableUS = true;
+const bool enableUS = false;
 
 CRGB leds[NUM_LEDS];
 
@@ -61,7 +61,23 @@ static int mission_Btn(struct pt *pt)
 	PT_END(pt);
 }
 
+void test() {
+	for (int i=0; i<(NUM_LEDS)/8; ++i) {
+		for (int j=0; j<8; ++j) {
+			leds[i][j] = CRGB::Blue;
+		}
+		FastLED.show();
+		for (int j=0; j<8; ++j) {
+			leds[i][j] = CRGB::Black;
+		}
+		FastLED.show();
+	}
+}
+
 void setup() {
+
+	Serial.begin(9600);
+
 	// init FastLED
 	FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
 	// init ultrasonic sensor
@@ -69,17 +85,21 @@ void setup() {
 		bool started = US::init();
 	}
 
+	test();
+
 	// init Buttons
 	Buttons::init();
 
 	// init threads
 	PT_INIT(&M_US);
 	PT_INIT(&M_Btn);
+
+	newBlock();
 }
 
 void loop() {
 	// mission_US(&M_US);
-	mission_Btn(&M_Btn);
+	// mission_Btn(&M_Btn);
 
 
   if (delays < millis())
@@ -98,10 +118,9 @@ void loop() {
     movedown();  
   buttonController = 0;
   
-  
-  Serial.print(analogRead(A4));
-  Serial.print(analogRead(A5));
-  Serial.print(analogRead(A6));  
-  Serial.println(analogRead(A7));
+  // Serial.print(analogRead(A4));
+  // Serial.print(analogRead(A5));
+  // Serial.print(analogRead(A6));  
+  // Serial.println(analogRead(A7));
    
 }

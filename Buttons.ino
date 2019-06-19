@@ -50,5 +50,5 @@ int Buttons::detect()
 		return 2;
 	}
 
-	delay(50);
+	delay(100);
 }
