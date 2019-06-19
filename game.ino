@@ -1,6 +1,12 @@
-#include <string.h>
 #include <FastLED.h>
 // props
+
+int lines = 0;
+boolean  block[8][18]; //2 extra for rotation
+boolean  pile[8][16];
+boolean disp[8][16];
+
+boolean lib[10][5][7];
 
 /**
 CRGB r;
@@ -36,6 +42,29 @@ void rand_color()
   }
 }
 */
+
+int convert(int row, int col)
+{
+ /**
+    * convert a coordination to an integer,
+    * which is the corresponding number in
+    * LED array
+    *
+    * @param row, col: shows a coordination
+    * 
+    * Notice that the coordination starts
+    * from 0
+  */
+
+  row = 17 - row; 
+
+  if (row % 2 == 1) {
+   col = 7 - col;
+  }
+
+  return row*8+col;
+}
+
 
 void updateLED()
 {
@@ -968,4 +997,4 @@ bool space_right2()
     }
   }
   return true;
-}
+} 
